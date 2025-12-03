@@ -31,21 +31,41 @@ Requirements
 ========= GAMBLING SIMULATOR =========
 --------------------------------------
 
-- users start with a starting amount of money
-- users can choose a game to play
+- users are Players start with a starting amount of money/balance
+- users can choose a Game to play
     - coin flip
     - rock paper scissors
     - slot machine with symbols | & | % | $ | # | @ | X |
+
+|    |    |  0  /   |   \ /   |  /---\  |   \/   |   /|\   |
+|  --+--  |    /    |    X    |  |   |  |  (  )  |  <-+->  |
+|    |    |   /  0  |   / \   |  \---/  |   \/   |   \|/   |
+
+
+- Players can place Bets, win or lose, which updates their balance
+- Players, Games, and Bets are saved in DB so app can remembers when restarted
 
 -------
 Classes
 -------
 
 - Player Class
-    - int    playerID
+    - int    id
     - String name
     - int    balance
 
 - Game Class
-    - int    gameID
-    - String gameName
+    - int    id
+    - String name
+    - int minBet
+    - int maxBet
+    - double multiplier
+
+- Bet Class
+    - int id
+    - int playerId
+    - int gameId
+    - int amount
+    - boolean win
+    - int payout
+
