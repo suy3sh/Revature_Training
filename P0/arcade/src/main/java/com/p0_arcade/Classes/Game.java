@@ -9,8 +9,8 @@ public class Game implements Serializable{
     private int id;
     private String name;
     private String description;
-    private int minWager;
-    private double multiplier;
+    private int minWager; // minimum wager amount allowed for the game
+    private double multiplier; // the multiplier applied when the game is won.
 
     // Constructors
     public Game() {
@@ -21,8 +21,8 @@ public class Game implements Serializable{
         this.id = id;
         this.name = name;
         this.description = desc;
-        this.minWager = min; // minimum wager amount allowed for the game
-        this.multiplier = multi; // the multiplier applied when the game is won.
+        setMinWager(min);
+        setMultiplier(multi);
     }
 
     // Getters & Setters
@@ -62,11 +62,13 @@ public class Game implements Serializable{
         if (min < 0) {
             throw new IllegalArgumentException("Minimum Wager cannot be less than 0!");
         }
-
         this.minWager = min;
     }
 
     public void setMultiplier(double multi) {
+        if (multi < 0) {
+            throw new IllegalArgumentException("Multiplier cannot be less than 0!");
+        }
         this.multiplier = multi;
     }
 
