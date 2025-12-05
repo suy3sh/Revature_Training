@@ -2,17 +2,35 @@ package com.p0_arcade;
 
 import java.util.*;
 
-import com.p0_arcade.Classes.*;;
+import com.p0_arcade.Classes.*;
 
 public class Main {
 
     private Scanner scanner = new Scanner(System.in);
+
     private final List<Player> players = new ArrayList<>();
+    private List<Game> games = new ArrayList<>();
+
+
     private Player currPlayer = null;
+
     private int nextId = 1;
 
     public static void main(String[] args) {
         new Main().run();   
+    }
+
+    private void initializeGames(){
+        games.add(new Game(1, 
+                    "Coin Flip", 
+                    "The Arcade flips a coin! Guess either Heads or Tails. Guess correctly to win!", 
+                    20, 
+                    1.5));
+        games.add(new Game(2, 
+                    "Rock, Paper, Scissors", 
+                    "Rock beats Scissors, Scissors beats Paper, and Paper beats Rock. Choose either Rock, Paper, or Scissors, and go against the Arcade!", 
+                    10, 
+                    2.0));
     }
 
     private void run(){
@@ -23,8 +41,8 @@ public class Main {
 
             switch (choice){
                 case "1": //PICK A GAME
+                    initializeGames();
                     pickGame();
-                    enterContinue();
                     break;
                 case "2": // LOG IN
                     logIn();
@@ -94,7 +112,14 @@ public class Main {
         }
     }
 
-    private void pickGame() {
+    private Game pickGame() { // returns an Game object of the game that is chosen.
+
+        if (currPlayer == null){
+            System.out.println("Current Player has not been chosen! Either create a new Player or Log in!");
+            enterContinue();
+            return null;
+        }
+
         System.out.println("\nPick a Game to Play");
         System.out.println("===================");
         System.out.println("1.) Coin Flip (Minimum Wager: 20 | Multiplier: 1.5x)");
@@ -102,18 +127,34 @@ public class Main {
         System.out.println("0.) Go back to Main Menu");
         
         String input = chooseGameOption();
+        Game game = null;
 
 
         switch (input) {
             case "1":
                 System.out.println("COIN FLIP UNDER CONSTRUCTION");
+                game = new Game(nextGameId, 
+                    "Coin Flip", 
+                    "The Arcade flips a coin! Guess either Heads or Tails. Guess correctly to win!", 
+                    20, 
+                    1.5);
+                nextGameId++;
+                enterContinue();
                 break;
             case "2":
                 System.out.println("R.P.S. UNDER CONSTRUCTION");
+                game = new Game(nextGameId, 
+                    "Rock, Paper, Scissors", 
+                    "Rock beats Scissors, Scissors beats Paper, and Paper beats Rock. Choose either Rock, Paper, or Scissors, and go against the Arcade!", 
+                    10, 
+                    2.0);
+                nextGameId++;
+                enterContinue();
                 break;
             case "0":
-                break;
+                return null;
         }
+        return game;
     }
 
     private void createPlayer() {

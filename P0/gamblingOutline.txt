@@ -69,3 +69,13 @@ Classes
     - boolean win
     - int payout
 
+
+
+TO DO:
+
+Wager.java
+Services layer
+Database Backend
+Mock Repo?
+
+
