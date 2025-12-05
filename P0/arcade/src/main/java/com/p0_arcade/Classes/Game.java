@@ -21,8 +21,8 @@ public class Game implements Serializable{
         this.id = id;
         this.name = name;
         this.description = desc;
-        this.minWager = min;
-        this.multiplier = multi;
+        this.minWager = min; // minimum wager amount allowed for the game
+        this.multiplier = multi; // the multiplier applied when the game is won.
     }
 
     // Getters & Setters

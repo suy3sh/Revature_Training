@@ -18,13 +18,12 @@ public class Main {
     private void run(){
         boolean running = true;
 
-        while (running){
-            printMenu();
-            String choice = scanner.nextLine();
+        while (running) {
+            String choice = printMenu();
 
             switch (choice){
                 case "1": //PICK A GAME
-                    System.out.println("UNDER CONSTRUCTION");
+                    pickGame();
                     enterContinue();
                     break;
                 case "2": // LOG IN
@@ -42,15 +41,11 @@ public class Main {
                 case "0": // EXIT GAME
                     running = false;
                     break;
-                default: 
-                    System.out.println("Invalid Choice. Choose again.");
-                    enterContinue();
             }
-
         }
     }
 
-    private void printMenu(){
+    private String printMenu(){
         System.out.println("\n========== Welcome to the Arcade! ==========");
         System.out.println(
             "Current Player: " + (currPlayer == null ? "[none]" : 
@@ -62,8 +57,63 @@ public class Main {
         System.out.println("3.) Create a New Player");
         System.out.println("4.) List Players");
         System.out.println("0.) Exit the Arcade");
-        System.out.println();
-        System.out.print("Choose an option: ");
+        return chooseMenuOption();
+    }
+
+    private String chooseMenuOption(){
+        while (true) {
+            System.out.print("\nChoose an option: ");
+            String input = scanner.nextLine();
+
+            //validate
+            if (input.equals("1") ||
+                input.equals("2") ||
+                input.equals("3") ||
+                input.equals("4") ||
+                input.equals("0")) {
+                    return input;
+                }
+
+            System.out.println("Invalid Choice. Choose again.");
+        }
+    }
+
+    private String chooseGameOption(){
+        while (true) {
+            System.out.print("\nChoose an option: ");
+            String input = scanner.nextLine();
+
+            //validate
+            if (input.equals("1") ||
+                input.equals("2") ||
+                input.equals("0")) {
+                    return input;
+                }
+
+            System.out.println("Invalid Choice. Choose again.");
+        }
+    }
+
+    private void pickGame() {
+        System.out.println("\nPick a Game to Play");
+        System.out.println("===================");
+        System.out.println("1.) Coin Flip (Minimum Wager: 20 | Multiplier: 1.5x)");
+        System.out.println("2.) Rock, Paper, Scissors (Minumum Wager: 10 | Multiplier: 2.0x)");
+        System.out.println("0.) Go back to Main Menu");
+        
+        String input = chooseGameOption();
+
+
+        switch (input) {
+            case "1":
+                System.out.println("COIN FLIP UNDER CONSTRUCTION");
+                break;
+            case "2":
+                System.out.println("R.P.S. UNDER CONSTRUCTION");
+                break;
+            case "0":
+                break;
+        }
     }
 
     private void createPlayer() {
