@@ -25,6 +25,24 @@ public class Main {
             System.out.println("Database: " + conn.getMetaData().getDatabaseProductName());
             System.out.println("Version: " + conn.getMetaData().getDatabaseProductVersion());
 
+            //Create a statement
+            Statement st = conn.createStatement();
+
+            //execute a query
+            String sql = "SELECT * FROM users";
+            ResultSet rs = st.executeQuery(sql);
+
+            //Process Results
+            while(rs.next()){
+                System.out.println("User: " + rs.getString("username") + 
+                                ", Pass: " + rs.getString("password"));
+            }
+
+            //Make sure to close resources
+            rs.close();
+            st.close();
+            conn.close();
+
         }catch(SQLException e){
             System.err.println("Connection Failed!");
             e.printStackTrace();
