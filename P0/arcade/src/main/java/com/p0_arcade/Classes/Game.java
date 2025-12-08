@@ -1,4 +1,4 @@
-package com.p0_arcade.Classes;
+package com.p0_arcade.classes;
 
 import java.io.Serializable;
 

@@ -1,8 +1,9 @@
-package com.p0_arcade.Service;
+package com.p0_arcade.service;
 
-import com.p0_arcade.Classes.*;
 import java.util.Scanner;
 //import java.util.Random;
+
+import com.p0_arcade.classes.*;
 
 public class GameService {
 
@@ -18,7 +19,7 @@ public class GameService {
 
         System.out.println("\n====== " + g.getName() + " ======");
         System.out.println(g.getDescription());
-        System.err.println("Minumum Wager: " + g.getMinWager() + " points");
+        System.err.println("Minumum Wager: " + g.getMinWager() + " pts");
         System.err.println("Win Multiplier: " + g.getMultiplier() + "x");
         System.err.println("====================");
 
@@ -90,8 +91,6 @@ public class GameService {
 
     private void coinFlip(Player p, Wager w){
         System.out.println("COIN FLIP IS UNDER CONSTRUCTION!!! (INSIDE GAMESERVICE.JAVA) ");
-
-        
     }
 
     private void rockPaperScissors(Player p, Wager w){

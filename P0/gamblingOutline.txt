@@ -73,7 +73,6 @@ Classes
 
 TO DO:
 
-Update to Java 21
 Services layer
 Database Backend
 Mock Repo?

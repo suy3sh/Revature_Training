@@ -7,7 +7,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 
 // Used to avoid hardcoding url, username, and password using .properties file
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -34,7 +33,7 @@ public class Main {
     private static String user;
 
 
-    
+    //uses db.properties file to get url, username, and password
     static {
         Properties props = new Properties();
 
@@ -53,6 +52,7 @@ public class Main {
 
     }
 
+    // connection function
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, user, pass);
     }

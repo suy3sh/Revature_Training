@@ -2,20 +2,23 @@ package com.p0_arcade;
 
 import java.util.*;
 
-import com.p0_arcade.Classes.*;
-import com.p0_arcade.Service.GameService;
+import com.p0_arcade.classes.*;
+import com.p0_arcade.repo.PlayerRepository;
+import com.p0_arcade.service.GameService;
 
 public class Main {
 
     private Scanner scanner = new Scanner(System.in);
 
-    private final List<Player> players = new ArrayList<>();
+    //private final List<Player> players = new ArrayList<>();
+    private final PlayerRepository playerRepo = new PlayerRepository();
+
+    
     private List<Game> games = new ArrayList<>();
 
 
     private Player currPlayer = null;
 
-    private int nextId = 1;
     private final GameService gameService = new GameService(scanner);
 
     public static void main(String[] args){
@@ -27,14 +30,20 @@ public class Main {
 
         while (running){
             String choice = printMenu();
+            initializeGames();
 
             switch (choice){
                 case "1": //PICK A GAME
-                    initializeGames();
-
-                    Game chosenGame = pickGame();
-                    gameService.play(currPlayer, chosenGame);
- 
+                    
+                    if (currPlayer == null){
+                        System.out.println("Current Player has not been chosen! Either create a new Player or Log in!");
+                        enterContinue();
+                        break;
+                    } else {
+                        Game chosenGame = pickGame();
+                        gameService.play(currPlayer, chosenGame);
+                    }
+                    
                     break;
                 case "2": // LOG IN
                     logIn();
@@ -119,12 +128,6 @@ public class Main {
 
     private Game pickGame(){ 
 
-        if (currPlayer == null){
-            System.out.println("Current Player has not been chosen! Either create a new Player or Log in!");
-            enterContinue();
-            return null;
-        }
-
         System.out.println("\nPick a Game to Play");
         System.out.println("===================");
         System.out.println("1.) Coin Flip (Minimum Wager: 20 | Multiplier: 1.5x)");
@@ -162,17 +165,15 @@ public class Main {
         }
 
         Player player = new Player(name);
+        playerRepo.insert(player);
 
-        player.setId(nextId);
-        players.add(player);
-
-        System.out.println("Created Player: " + name);
+        System.out.println("Created Player: " + player.getName() + " (ID: " + player.getId() + " | " + player.getPoints() + " pts)");
         currPlayer = player;
-        nextId++;
-
     }
 
     private void listPlayers(){
+        
+        List<Player> players = playerRepo.findAll();
         System.out.println("\nList of Current Available Players");
         System.out.println("=================================");
 
@@ -190,6 +191,8 @@ public class Main {
     }
 
     private void logIn(){
+
+        List<Player> players = playerRepo.findAll();
 
         if(players.isEmpty()){
             System.out.println("\nNo available Players. Create a player first.");
@@ -210,17 +213,24 @@ public class Main {
                 System.err.println("Enter a valid ID.");
             }
         }
+
+        Player p = playerRepo.findById(id); //either returns the player or null;
+
+        if (p == null){
+            System.out.println("No Player found with ID " + id);
+            return;
+        }
         
 
-        for (Player p : players){
-            if (id == p.getId()){
-                currPlayer = p;
-                System.out.println("You are now logged in as: " + p.getName() + " (ID " + p.getId() + " | " + p.getPoints() + " pts)");
-                return;
-            }
-        }
+        
+            
+        currPlayer = p;
+        System.out.println("You are now logged in as: " + p.getName() + " (ID " + p.getId() + " | " + p.getPoints() + " pts)");
+        return;
+            
+        
 
-        System.out.println("No Player found with ID " + id);
+        
     }
 
     private void enterContinue(){
