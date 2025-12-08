@@ -11,11 +11,11 @@ public class Wager implements Serializable{
     private int points;
 
     //Constructors
-    public Wager() {
+    public Wager(){
 
     }
 
-    public Wager(int id, int playerId, int gameId, int points) {
+    public Wager(int id, int playerId, int gameId, int points){
         this.id = id;
         this.playerId = playerId;
         this.gameId = gameId;
@@ -23,23 +23,23 @@ public class Wager implements Serializable{
     }
 
     // Getters & Setters
-    public int getId() {
+    public int getId(){
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(int id){
         this.id = id;
     }
 
-    public int getPlayerId() {
+    public int getPlayerId(){
         return this.playerId;
     }
 
-    public void setPlayerId(int id) {
+    public void setPlayerId(int id){
         this.playerId = id;
     }
 
-    public int getGameId() {
+    public int getGameId(){
         return this.gameId;
     }
 
@@ -47,16 +47,22 @@ public class Wager implements Serializable{
         this.gameId = id;
     }
 
-    public int getPoints() {
+    public int getPoints(){
         return points;
     }
 
-    public void setPoints(int points) {
-        if (points < 0) {
+    public void setPoints(int points){
+        if (points < 0){
             throw new IllegalArgumentException("Wager amount must be positive!");
         }
 
         this.points = points;
+    }
+
+    // toString
+    @Override
+    public String toString(){
+        return "Wager {id=" + id + ", playerId=" + playerId + ", gameId=" + gameId + ", points=" + points + "}";
     }
 
 }

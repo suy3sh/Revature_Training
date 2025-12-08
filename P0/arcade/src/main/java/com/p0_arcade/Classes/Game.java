@@ -13,11 +13,10 @@ public class Game implements Serializable{
     private double multiplier; // the multiplier applied when the game is won.
 
     // Constructors
-    public Game() {
-
+    public Game(){
     }
 
-    public Game(int id, String name, String desc, int min, double multi) {
+    public Game(int id, String name, String desc, int min, double multi){
         this.id = id;
         this.name = name;
         this.description = desc;
@@ -26,60 +25,60 @@ public class Game implements Serializable{
     }
 
     // Getters & Setters
-    public int getId() {
+    public int getId(){
         return this.id;
     }
 
-    public String getName() {
+    public String getName(){
         return this.name;
     }
 
-    public String getDescription() {
+    public String getDescription(){
         return this.description;
     }
 
-    public int getMinWager() {
+    public int getMinWager(){
         return this.minWager;
     }
 
-    public double getMultiplier() {
+    public double getMultiplier(){
         return this.multiplier;
     }
 
-    public void setId(int id) {
+    public void setId(int id){
         this.id = id;
     }
 
-    public void setName(String name) {
+    public void setName(String name){
         this.name = name;
     }
 
-    public void setDescription(String desc) {
+    public void setDescription(String desc){
         this.description = desc;
     }
 
-    public void setMinWager(int min) {
-        if (min < 0) {
+    public void setMinWager(int min){
+        if (min < 0){
             throw new IllegalArgumentException("Minimum Wager cannot be less than 0!");
         }
         this.minWager = min;
     }
 
-    public void setMultiplier(double multi) {
-        if (multi < 0) {
+    public void setMultiplier(double multi){
+        if (multi < 0){
             throw new IllegalArgumentException("Multiplier cannot be less than 0!");
         }
         this.multiplier = multi;
     }
 
     //Check if wager is valid
-    public boolean isValidWager(int amount) {
+    public boolean isValidWager(int amount){
         return amount > minWager;
     }
 
     // Convert to String
     @Override
-    public String toString() {
+    public String toString(){
         return "Game {id: " + id + 
             ", name: " + name + 
             ", description: " + description + 
