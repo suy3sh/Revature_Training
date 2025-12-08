@@ -73,7 +73,7 @@ Classes
 
 TO DO:
 
-Wager.java
+Update to Java 21
 Services layer
 Database Backend
 Mock Repo?
