@@ -55,8 +55,6 @@ public class PlayerRepository implements DOAInterface<Player>{
                     return new Player(playerId, name, points);
                 }
             }
-            
-
         }catch(SQLException e){
             throw new RuntimeException("Failed to find Player in DB",e);
         }

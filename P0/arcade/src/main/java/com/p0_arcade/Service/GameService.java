@@ -1,17 +1,25 @@
 package com.p0_arcade.service;
 
+import java.sql.SQLException;
+
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
-//import java.util.Random;
 
 import com.p0_arcade.classes.*;
+import com.p0_arcade.repo.GameRepository;
 
 public class GameService {
 
-    //private final Random random = new Random();
+    private final GameRepository gameRepo;
+    private final PlayerService playerService;
     private final Scanner scanner;
     private int nextWagerId = 1;
+    private final Random random = new Random();
 
-    public GameService(Scanner scanner){
+    public GameService(GameRepository gameRepo, PlayerService playerService, Scanner scanner) {
+        this.gameRepo = gameRepo;
+        this.playerService = playerService;
         this.scanner = scanner;
     }
 

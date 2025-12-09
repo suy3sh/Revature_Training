@@ -73,8 +73,7 @@ Classes
 
 TO DO:
 
-Services layer
-Database Backend
-Mock Repo?
+Work on Game Service
+Work on Wager Service + Repo
 
 
