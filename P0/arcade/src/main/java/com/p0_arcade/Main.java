@@ -5,6 +5,7 @@ import java.util.*;
 import com.p0_arcade.classes.*;
 import com.p0_arcade.repo.PlayerRepository;
 import com.p0_arcade.service.GameService;
+import com.p0_arcade.service.PlayerService;
 
 public class Main {
 
@@ -12,6 +13,7 @@ public class Main {
 
     //private final List<Player> players = new ArrayList<>();
     private final PlayerRepository playerRepo = new PlayerRepository();
+    private final PlayerService playerService = new PlayerService(playerRepo);
 
     
     private List<Game> games = new ArrayList<>();
@@ -164,8 +166,7 @@ public class Main {
             }
         }
 
-        Player player = new Player(name);
-        playerRepo.insert(player);
+        Player player = playerService.createPlayer(name);
 
         System.out.println("Created Player: " + player.getName() + " (ID: " + player.getId() + " | " + player.getPoints() + " pts)");
         currPlayer = player;
@@ -173,7 +174,7 @@ public class Main {
 
     private void listPlayers(){
         
-        List<Player> players = playerRepo.findAll();
+        List<Player> players = playerService.getAllPlayers();
         System.out.println("\nList of Current Available Players");
         System.out.println("=================================");
 
@@ -192,8 +193,7 @@ public class Main {
 
     private void logIn(){
 
-        List<Player> players = playerRepo.findAll();
-
+        List<Player> players = playerService.getAllPlayers();
         if(players.isEmpty()){
             System.out.println("\nNo available Players. Create a player first.");
             return;
@@ -214,7 +214,7 @@ public class Main {
             }
         }
 
-        Player p = playerRepo.findById(id); //either returns the player or null;
+        Player p = playerService.getPlayerById(id); //either returns the player or null;
 
         if (p == null){
             System.out.println("No Player found with ID " + id);

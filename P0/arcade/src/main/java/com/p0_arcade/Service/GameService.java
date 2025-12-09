@@ -17,6 +17,10 @@ public class GameService {
 
     public void play(Player p, Game g){
 
+        if (g == null){
+            return;
+        }
+
         System.out.println("\n====== " + g.getName() + " ======");
         System.out.println(g.getDescription());
         System.err.println("Minumum Wager: " + g.getMinWager() + " pts");
