@@ -9,14 +9,11 @@ import java.sql.Connection;
 
 import java.util.Properties;
 
-
 import com.p0_arcade.Main;
 
 public class DatabaseConfig {
 
-    private static String url;
-    private static String pass;
-    private static String user;
+    private static Connection connection;
 
     static {
         Properties props = new Properties();
@@ -26,16 +23,24 @@ public class DatabaseConfig {
                 System.err.println("db.properties not found!");
             }else{
                 props.load(input);
-                url = props.getProperty("url");
-                user = props.getProperty("username");
-                pass = props.getProperty("password");
+
+                connection = DriverManager.getConnection(
+                    props.getProperty("url"),
+                    props.getProperty("username"),
+                    props.getProperty("password")
+                );
             }
         }catch(IOException e){
-            e.printStackTrace();
+            throw new RuntimeException("failed to load db connection", e);
+        }catch(Exception e){
+            throw new RuntimeException(e);
         }
     }
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url, user, pass);
+        if (connection == null){
+            throw new RuntimeException("Connection failed to setup correctly");
+        }
+        return connection;
     }
 }
