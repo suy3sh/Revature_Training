@@ -35,15 +35,14 @@ Requirements
 - users can choose a Game to play
     - coin flip
     - rock paper scissors
-    - slot machine with symbols | & | % | $ | # | @ | X |
+    - ??? slot machine with symbols | & | % | $ | # | @ | X |
 
 |    |    |  0  /   |   \ /   |  /---\  |   \/   |   /|\   |
 |  --+--  |    /    |    X    |  |   |  |  (  )  |  <-+->  |
 |    |    |   /  0  |   / \   |  \---/  |   \/   |   \|/   |
 
-
 - Players can place Bets, win or lose, which updates their balance
-- Players, Games, and Bets are saved in DB so app can remembers when restarted
+- Players, Games, and Bets are saved in DB so app can remember when restarted
 
 -------
 Classes
@@ -73,7 +72,15 @@ Classes
 
 TO DO:
 
+Fix DAO Spelling
+
+Entities
+Models
+Service Interface
+Error Logging
 Work on Game Service
 Work on Wager Service + Repo
+Unit Testing (Mockito + JUnit)
+
 
 
