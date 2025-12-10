@@ -1,40 +1,36 @@
 package com.p0_arcade.service;
 
-import com.p0_arcade.repo.PlayerRepository;
-import com.p0_arcade.classes.Player;
+import com.p0_arcade.repo.DAO.PlayerRepository;
+import com.p0_arcade.repo.entities.PlayerEntity;
+import com.p0_arcade.service.models.Player;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
+
 
 /* 
  *   Serice Layer for Player Operations
  *- hides SQLE Exceptions from PlayerRepo from rest of app
  * - contains business logic around Players
 */
-public class PlayerService {
+public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
 
-    private final PlayerRepository repo;
-
-    public PlayerService(PlayerRepository repo){
-        this.repo = repo;
-    }
-
+    private final PlayerRepository repo = new PlayerRepository();
 
     //CREATE
-    public Player createPlayer(String name){
-        Player p = new Player(name);
-
-        try {
-            return repo.insert(p);
+    public Integer createEntity(PlayerEntity p){
+        try{
+            Integer id = repo.insert(p);
+            return id;
         }catch(SQLException e){
-            System.out.println("Service Error: Could not create Player.");
             e.printStackTrace();
-            return null;
+            return -1;
         }
     }
 
-    //READ
-    public List<Player> getAllPlayers() {
+    //READ ALL
+    public List<PlayerEntity> readAllEntities() {
         try {
             return repo.findAll();
         }catch(SQLException e){
@@ -44,50 +40,80 @@ public class PlayerService {
         }
     }
 
-    public Player getPlayerById(int id){
+    //READ BY ID
+    public Optional<PlayerEntity> readEntityById(Integer id){
         try{
-            return repo.findById(id);
-        }catch(SQLException e){
+            Optional<PlayerEntity> playerEntity = repo.findById(id);
+            
+            if (playerEntity.isEmpty()){
+                throw new RuntimeException("Player not found");
+            } 
+
+            return playerEntity;
+
+        }catch(SQLException | RuntimeException e){
             System.out.println("Service Error: Could not look up Player with ID: " + id);
             e.printStackTrace();
-            return null;
+            return Optional.empty();
         }
     }
 
     //UPDATE
-    public boolean updatePlayer(Player p){ //return true on success, false on failure
+    public PlayerEntity updateEntity(PlayerEntity p){ //return true on success, false on failure
+        //check if points is valid after update
+        if (p.getPoints() < 0) throw new IllegalArgumentException("Player points cannot be negative");
+        
         try{
             repo.update(p);
-            return true;
+            return p;
         }catch(SQLException e){
             System.out.println("Service Error: Could not update Player with ID: " + p.getId());
             e.printStackTrace();
-            return false;
-        }
-    }
-
-    public boolean updatePlayer(Player p, int delta){ //return true on success, false on failure, this function adjusts the player's points based on win or lose
-        try {
-            if (delta > 0) {
-                p.addPoints(delta);
-            } else if (delta < 0) {
-                // delta is negative → spend |delta|
-                p.spendPoints(-delta);
-            } // delta == 0 → no change
-
-            repo.update(p);
-            return true;
-
-        } catch (IllegalArgumentException e) { // from addPoints/spendPoints
-            System.out.println("Service Error: Invalid point adjustment for player ID: " + p.getId());
-            e.printStackTrace();
-            return false;
-        } catch (SQLException e) {
-            System.out.println("Service Error: Could not persist point change for player ID: " + p.getId());
-            e.printStackTrace();
-            return false;
+            return null;
         }
     }
     
     //DELETE
+    public void deleteEntityById(Integer id){
+        try{
+            repo.deleteById(id);
+        }catch(SQLException | RuntimeException e){
+            System.out.println("Service Error: Could not delete Player with ID: " + id);
+            e.printStackTrace();
+        }
+    }
+
+    //Conversation
+    public Optional<Player> convertEntityToModel(PlayerEntity entity){
+        Player player = new Player();
+        player.setId(entity.getId());
+        player.setName(entity.getName());
+        player.setPoints(entity.getPoints());
+        
+        return Optional.of(player);
+    }
+
+    public Optional<Player> getModelById(Integer id){
+        Optional<PlayerEntity> playerEntity = readEntityById(id);
+
+        try{
+
+            if(playerEntity.isPresent()){
+                Optional<Player> player = convertEntityToModel(playerEntity.get());
+                if(player.isPresent()){
+                    return player;
+                }else{
+                    throw new RuntimeException("PlayerEntity conversion failed");
+                }
+            }else{
+                throw new RuntimeException("PlayerEntity not found");
+            }
+
+        }catch(RuntimeException e){
+            e.printStackTrace();
+            return Optional.empty();
+        }
+
+    }
+
 }

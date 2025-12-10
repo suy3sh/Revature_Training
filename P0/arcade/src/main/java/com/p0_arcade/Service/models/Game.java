@@ -1,22 +1,19 @@
-package com.p0_arcade.classes;
+package com.p0_arcade.service.models;
 
-import java.io.Serializable;
 
-public class Game implements Serializable{
+public class Game{
 
-    private static final long serialVersionUID = 1L;
-
-    private int id;
+    private Integer id;
     private String name;
     private String description;
-    private int minWager; // minimum wager amount allowed for the game
+    private Integer minWager; // minimum wager amount allowed for the game
     private double multiplier; // the multiplier applied when the game is won.
 
     // Constructors
     public Game(){
     }
 
-    public Game(int id, String name, String desc, int min, double multi){
+    public Game(Integer id, String name, String desc, Integer min, double multi){
         this.id = id;
         this.name = name;
         this.description = desc;
@@ -25,7 +22,7 @@ public class Game implements Serializable{
     }
 
     // Getters & Setters
-    public int getId(){
+    public Integer getId(){
         return this.id;
     }
 
@@ -37,7 +34,7 @@ public class Game implements Serializable{
         return this.description;
     }
 
-    public int getMinWager(){
+    public Integer getMinWager(){
         return this.minWager;
     }
 
@@ -45,7 +42,7 @@ public class Game implements Serializable{
         return this.multiplier;
     }
 
-    public void setId(int id){
+    public void setId(Integer id){
         this.id = id;
     }
 
@@ -57,7 +54,7 @@ public class Game implements Serializable{
         this.description = desc;
     }
 
-    public void setMinWager(int min){
+    public void setMinWager(Integer min){
         if (min < 0){
             throw new IllegalArgumentException("Minimum Wager cannot be less than 0!");
         }
@@ -72,7 +69,7 @@ public class Game implements Serializable{
     }
 
     //Check if wager is valid
-    public boolean isValidWager(int amount){
+    public boolean isValidWager(Integer amount){
         return amount > minWager;
     }
 

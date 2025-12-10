@@ -72,9 +72,9 @@ Classes
 
 TO DO:
 
-Fix DAO Spelling
 
-Entities
+
+
 Models
 Service Interface
 Error Logging
