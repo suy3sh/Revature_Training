@@ -1,21 +1,19 @@
-package com.p0_arcade.classes;
+package com.p0_arcade.service.models;
 
-import java.io.Serializable;
 
-public class Wager implements Serializable{
-    private static final long serialVersionUID = 1L;
+public class Wager{
 
-    private int id;
-    private int playerId;
-    private int gameId;
-    private int points;
+    private Integer id;
+    private Integer playerId;
+    private Integer gameId;
+    private Integer points;
 
     //Constructors
     public Wager(){
 
     }
 
-    public Wager(int id, int playerId, int gameId, int points){
+    public Wager(Integer id, Integer playerId, Integer gameId, Integer points){
         this.id = id;
         this.playerId = playerId;
         this.gameId = gameId;
@@ -23,35 +21,35 @@ public class Wager implements Serializable{
     }
 
     // Getters & Setters
-    public int getId(){
+    public Integer getId(){
         return this.id;
     }
 
-    public void setId(int id){
+    public void setId(Integer id){
         this.id = id;
     }
 
-    public int getPlayerId(){
+    public Integer getPlayerId(){
         return this.playerId;
     }
 
-    public void setPlayerId(int id){
+    public void setPlayerId(Integer id){
         this.playerId = id;
     }
 
-    public int getGameId(){
+    public Integer getGameId(){
         return this.gameId;
     }
 
-    public void setGameId(int id){
+    public void setGameId(Integer id){
         this.gameId = id;
     }
 
-    public int getPoints(){
+    public Integer getPoints(){
         return points;
     }
 
-    public void setPoints(int points){
+    public void setPoints(Integer points){
         if (points < 0){
             throw new IllegalArgumentException("Wager amount must be positive!");
         }

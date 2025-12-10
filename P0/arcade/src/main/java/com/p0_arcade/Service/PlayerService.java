@@ -16,12 +16,12 @@ import java.util.Optional;
 */
 public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
 
-    private final PlayerRepository repo = new PlayerRepository();
+    private final PlayerRepository playerRepo = new PlayerRepository();
 
     //CREATE
     public Integer createEntity(PlayerEntity p){
         try{
-            Integer id = repo.insert(p);
+            Integer id = playerRepo.insert(p);
             return id;
         }catch(SQLException e){
             e.printStackTrace();
@@ -32,7 +32,7 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
     //READ ALL
     public List<PlayerEntity> readAllEntities() {
         try {
-            return repo.findAll();
+            return playerRepo.findAll();
         }catch(SQLException e){
             System.out.println("Service Error: Could not load players from Database.");
             e.printStackTrace();
@@ -43,7 +43,7 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
     //READ BY ID
     public Optional<PlayerEntity> readEntityById(Integer id){
         try{
-            Optional<PlayerEntity> playerEntity = repo.findById(id);
+            Optional<PlayerEntity> playerEntity = playerRepo.findById(id);
             
             if (playerEntity.isEmpty()){
                 throw new RuntimeException("Player not found");
@@ -64,7 +64,7 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
         if (p.getPoints() < 0) throw new IllegalArgumentException("Player points cannot be negative");
         
         try{
-            repo.update(p);
+            playerRepo.update(p);
             return p;
         }catch(SQLException e){
             System.out.println("Service Error: Could not update Player with ID: " + p.getId());
@@ -76,7 +76,7 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
     //DELETE
     public void deleteEntityById(Integer id){
         try{
-            repo.deleteById(id);
+            playerRepo.deleteById(id);
         }catch(SQLException | RuntimeException e){
             System.out.println("Service Error: Could not delete Player with ID: " + id);
             e.printStackTrace();

@@ -1,14 +1,11 @@
-package com.p0_arcade.classes;
+package com.p0_arcade.service.models;
 
-import java.io.Serializable;
 
-public class Player implements Serializable{
+public class Player{
 
-    private static final long serialVersionUID = 1L;
-
-    private int id;
+    private Integer id;
     private String name;
-    private int points;
+    private Integer points;
 
 
     //Constructors
@@ -16,7 +13,7 @@ public class Player implements Serializable{
 
     }
 
-    public Player(int id, String name, int points){
+    public Player(Integer id, String name, Integer points){
         this.id = id;
         this.name = name;
         this.points = points;
@@ -28,7 +25,7 @@ public class Player implements Serializable{
     }
 
     //Getters & Setters
-    public int getId(){
+    public Integer getId(){
         return this.id;
     }
 
@@ -36,11 +33,11 @@ public class Player implements Serializable{
         return this.name;
     }
 
-    public int getPoints(){
+    public Integer getPoints(){
         return this.points;
     }
 
-    public void setId(int id){
+    public void setId(Integer id){
         this.id = id;
     }
 
@@ -48,19 +45,19 @@ public class Player implements Serializable{
         this.name = name;
     }
 
-    public void setPoints(int balance){
+    public void setPoints(Integer balance){
         if (balance < 0) throw new IllegalArgumentException("Points cannot be negative");
         this.points = balance;
     }
 
 
     //Deposit and Withdraw Points
-    public void addPoints(int amount){
+    public void addPoints(Integer amount){
         if (amount <= 0) throw new IllegalArgumentException("Points to add must be above 0");
         setPoints(points + amount);
     }
 
-    public void spendPoints(int amount){
+    public void spendPoints(Integer amount){
         if (amount <= 0) throw new IllegalArgumentException("Points to spend must be above 0");
         if (amount > points) throw new IllegalArgumentException("You don't have enough points!");
         setPoints(points - amount);

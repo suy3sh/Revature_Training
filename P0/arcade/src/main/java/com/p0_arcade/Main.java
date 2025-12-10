@@ -6,6 +6,8 @@ import com.p0_arcade.classes.*;
 import com.p0_arcade.repo.PlayerRepository;
 import com.p0_arcade.service.GameService;
 import com.p0_arcade.service.PlayerService;
+import com.p0_arcade.service.models.Game;
+import com.p0_arcade.service.models.Player;
 
 public class Main {
 
