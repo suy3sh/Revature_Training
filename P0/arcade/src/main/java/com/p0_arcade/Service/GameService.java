@@ -11,27 +11,11 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/*
-//CREATE
-    public Integer createEntity(T entity);
-
-    //READ
-    public List<T> readAllEntities();
-    public Optional<T> readEntityById(Integer id);
-
-    //UPDATE
-    public T updateEntity(T entity);
-
-    //DELETE
-    public void deleteEntityById(Integer id);
-
-
-    // Conversation
-    public Optional<U> convertEntityToModel(T entity);
-    public Optional<U> getModelById(Integer id);
-}
+/* 
+ *   Service Layer for Game Operations
+ *- hides SQL Exceptions from GameRepo from rest of app
+ * - contains business logic around Games
 */
-
 public class GameService implements ServiceInterface<GameEntity, Game>{
 
     private static final Logger log = LoggerFactory.getLogger(GameService.class);
@@ -107,6 +91,7 @@ public class GameService implements ServiceInterface<GameEntity, Game>{
 
         return Optional.of(game);
     }
+
     public Optional<Game> getModelById(Integer id){
         Optional<GameEntity> gameEntity = readEntityById(id);
 
@@ -128,5 +113,17 @@ public class GameService implements ServiceInterface<GameEntity, Game>{
             log.error("Failed to get gameModel by id={}", id, e);
             return Optional.empty();
         }
+    }
+
+    // Game Logic
+    public int playCoinFlip(Game game, int wager, char guess){
+        if (guess != 'H' && guess != 'T') {
+            throw new IllegalArgumentException("Guess must be 'H' or 'T'");
+        }
+        double multiplier = game.getMultiplier();
+        boolean coin = Math.random() < 0.5; // Heads is true, Tails is false
+        boolean win = (guess == 'H' && coin) || (guess == 'T' && !coin);
+
+        return win ? (int) (wager * multiplier) : -wager;
     }
 }
