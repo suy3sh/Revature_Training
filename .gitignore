@@ -25,5 +25,3 @@ replay_pid*
 
 db.properties
 /logs/
-/*.log
-*.log

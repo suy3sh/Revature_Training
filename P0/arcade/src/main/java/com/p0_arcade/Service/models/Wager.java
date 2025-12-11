@@ -4,8 +4,8 @@ package com.p0_arcade.service.models;
 public class Wager{
 
     private Integer id;
-    private Integer playerId;
-    private Integer gameId;
+    private Player player;
+    private Game game;
     private Integer points;
 
     //Constructors
@@ -13,10 +13,10 @@ public class Wager{
 
     }
 
-    public Wager(Integer id, Integer playerId, Integer gameId, Integer points){
+    public Wager(Integer id, Player p, Game g, Integer points){
         this.id = id;
-        this.playerId = playerId;
-        this.gameId = gameId;
+        this.player = p;
+        this.game = g;
         setPoints(points);
     }
 
@@ -29,20 +29,20 @@ public class Wager{
         this.id = id;
     }
 
-    public Integer getPlayerId(){
-        return this.playerId;
+    public Player getPlayer(){
+        return this.player;
     }
 
-    public void setPlayerId(Integer id){
-        this.playerId = id;
+    public void setPlayer(Player p){
+        this.player = p;
     }
 
-    public Integer getGameId(){
-        return this.gameId;
+    public Game getGame(){
+        return this.game;
     }
 
-    public void setGameId(Integer id){
-        this.gameId = id;
+    public void setGame(Game g){
+        this.game = g;
     }
 
     public Integer getPoints(){
@@ -60,7 +60,7 @@ public class Wager{
     // toString
     @Override
     public String toString(){
-        return "Wager {id=" + id + ", playerId=" + playerId + ", gameId=" + gameId + ", points=" + points + "}";
+        return "Wager {id=" + id + ", player=" + player + ", game=" + game + ", points=" + points + "}";
     }
 
 }

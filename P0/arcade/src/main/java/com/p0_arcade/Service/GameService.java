@@ -38,6 +38,7 @@ public class GameService implements ServiceInterface<GameEntity, Game>{
             return gameRepo.findAll();
         } catch (SQLException e) {
             log.error("Failed to read all games", e);
+            e.printStackTrace();
             return null;
         }
     }
@@ -54,6 +55,7 @@ public class GameService implements ServiceInterface<GameEntity, Game>{
             return gameEntity;
         }catch(SQLException | RuntimeException e){
             log.error("Failed to read Game by id={}", id, e);
+            e.printStackTrace();
             return Optional.empty();
         }
     }
@@ -89,6 +91,9 @@ public class GameService implements ServiceInterface<GameEntity, Game>{
         game.setMinWager(g.getMinWager());
         game.setMultiplier(g.getMultiplier());
 
+        log.info("Converted GameEntity to Game model: id={}, name={}", game.getId(), game.getName());
+
+
         return Optional.of(game);
     }
 
@@ -100,7 +105,6 @@ public class GameService implements ServiceInterface<GameEntity, Game>{
             if(gameEntity.isPresent()){
                 Optional<Game> game = convertEntityToModel(gameEntity.get());
                 if(game.isPresent()){
-                    log.info("Converted gameEntity to Game model: id={}, name={}", game.get().getId(), game.get().getName());
                     return game;
                 }else{
                     throw new RuntimeException("gameEntity conversion failed");
@@ -111,6 +115,7 @@ public class GameService implements ServiceInterface<GameEntity, Game>{
 
         }catch(RuntimeException e){
             log.error("Failed to get gameModel by id={}", id, e);
+            e.printStackTrace();
             return Optional.empty();
         }
     }
@@ -118,12 +123,44 @@ public class GameService implements ServiceInterface<GameEntity, Game>{
     // Game Logic
     public int playCoinFlip(Game game, int wager, char guess){
         if (guess != 'H' && guess != 'T') {
-            throw new IllegalArgumentException("Guess must be 'H' or 'T'");
+            throw new IllegalArgumentException("Invalid Input: Guess must be 'H' or 'T'");
         }
+
         double multiplier = game.getMultiplier();
         boolean coin = Math.random() < 0.5; // Heads is true, Tails is false
         boolean win = (guess == 'H' && coin) || (guess == 'T' && !coin);
 
-        return win ? (int) (wager * multiplier) : -wager;
+        if (win){
+            System.out.println("You win!");
+            return (int) (wager * multiplier);
+        } else {
+            System.out.println("You lose!");
+            return -wager;
+        }
+    }
+
+    public int playRPS(Game game, int wager, char guess){
+
+        enum choice{
+            ROCK,
+            PAPER,
+            SCISSORS
+        }
+
+        if (guess != 'R' && guess != 'P' && guess != 'S'){
+            throw new IllegalArgumentException("Invalid Input: Guess must be 'R', 'P', or 'S'");
+        }
+
+        double multiplier = game.getMultiplier();
+        
+        choice opp = choice.values()[(int)(Math.random() * choice.values().length)];
+
+        if ((opp == choice.ROCK && guess == 'P') || (opp == choice.PAPER && guess == 'S') || (opp == choice.SCISSORS && guess == 'R')){
+            System.out.println("You win!");
+            return (int) (wager * multiplier);
+        } else {
+            System.out.println("You lose!");
+            return -wager;
+        }
     }
 }

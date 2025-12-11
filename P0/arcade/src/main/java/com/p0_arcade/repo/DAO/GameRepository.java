@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.*;
 
 import com.p0_arcade.repo.entities.GameEntity;
-import com.p0_arcade.database.DatabaseConfig;
+import com.p0_arcade.util.DatabaseConfig;
 
 public class GameRepository implements DAOInterface<GameEntity>{
     

@@ -1,4 +1,4 @@
-package com.p0_arcade.database;
+package com.p0_arcade.util;
 
 import java.io.IOException;
 import java.io.InputStream;

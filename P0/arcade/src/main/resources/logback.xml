@@ -14,7 +14,7 @@
     <!-- File Appender with rolling save -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- Current log file -->
-        <file>Revature_Training/P0/arcade/${LOG_DIR}/${APP_NAME}.log</file>
+        <file>${LOG_DIR}/${APP_NAME}.log</file>
 
         <!-- Rolling Policy -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -33,7 +33,6 @@
 
     <!-- Root Logger -->
     <root level="DEBUG">
-        <appender-ref ref="CONSOLE" />
         <appender-ref ref="FILE"/>
     </root>
 </configuration>

@@ -16,6 +16,11 @@ public class PlayerEntity {
         setPoints(points);
     }
 
+    public PlayerEntity(String name){
+        this.name = name;
+        setPoints(100);
+    }
+
     //Getters and Setters
     public Integer getId(){
         return this.id;

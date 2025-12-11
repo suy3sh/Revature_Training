@@ -5,6 +5,7 @@ import com.p0_arcade.repo.entities.PlayerEntity;
 import com.p0_arcade.service.models.Player;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,12 +28,14 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
     public Integer createEntity(PlayerEntity p){
         try{
             Integer id = playerRepo.insert(p);
+            p.setId(id); // Set the generated ID on the entity
             log.debug("Created new Player: id={}, name={}", p.getId(), p.getName());
 
             return id;
         }catch(SQLException e){
             log.error("Failed to create Player: name={}", p.getName(), e);
-            throw new RuntimeException("Failed to create player: " + p.getName(), e);
+            e.printStackTrace();
+            return -1;
         }
     }
 
@@ -42,6 +45,7 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
             return playerRepo.findAll();
         }catch(SQLException e){
             log.error("Failed to read all players", e);
+            e.printStackTrace();
             return null;
         }
     }
@@ -52,13 +56,14 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
             Optional<PlayerEntity> playerEntity = playerRepo.findById(id);
             
             if (playerEntity.isEmpty()){
-                throw new RuntimeException("Player not found");
+                return null;
             } 
 
             return playerEntity;
 
         }catch(SQLException | RuntimeException e){
             log.error("Failed to read Player by id={}", id, e);
+            e.printStackTrace();
             return Optional.empty();
         }
     }
@@ -74,6 +79,7 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
             return p;
         }catch(SQLException e){
             log.error("Failed to update Player: id={}, name={}", p.getId(), p.getName(), e);
+            e.printStackTrace();
             return null;
         }
     }
@@ -85,6 +91,7 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
             log.debug("Deleted Player with id={}", id);
         }catch(SQLException e){
             log.error("Failed to delete Player with id={}", id, e);
+            e.printStackTrace();
         }
     }
 
@@ -94,7 +101,7 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
         player.setId(entity.getId());
         player.setName(entity.getName());
         player.setPoints(entity.getPoints());
-        
+
         return Optional.of(player);
     }
 
@@ -106,7 +113,6 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
             if(playerEntity.isPresent()){
                 Optional<Player> player = convertEntityToModel(playerEntity.get());
                 if(player.isPresent()){
-                    log.info("Converted PlayerEntity to Player model: id={}, name={}", player.get().getId(), player.get().getName());
                     return player;
                 }else{
                     throw new RuntimeException("PlayerEntity conversion failed");
@@ -117,7 +123,22 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
 
         }catch(RuntimeException e){
             log.error("Failed to get playerModel by id={}", id, e);
+            e.printStackTrace();
             return Optional.empty();
         }
+    }
+
+    public List<Player> getAllModels(){
+        List<PlayerEntity> playerEntities = readAllEntities();
+        List<Player> players = new ArrayList<>();
+
+        for (PlayerEntity pe : playerEntities){
+            Optional<Player> player = convertEntityToModel(pe);
+            if (player.isPresent()){
+                players.add(player.get());
+            }
+        }
+
+        return players;
     }
 }

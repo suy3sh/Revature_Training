@@ -3,8 +3,8 @@ package com.p0_arcade.repo.DAO;
 import java.sql.*;
 import java.util.*;
 
-import com.p0_arcade.database.DatabaseConfig;
 import com.p0_arcade.repo.entities.PlayerEntity;
+import com.p0_arcade.util.DatabaseConfig;
 
 
 public class PlayerRepository implements DAOInterface<PlayerEntity>{

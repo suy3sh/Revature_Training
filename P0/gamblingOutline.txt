@@ -73,14 +73,8 @@ Classes
 TO DO:
 
 
-
-
-Models
-Service Interface
-Error Logging
-Work on Game Service
-Work on Wager Service + Repo
 Unit Testing (Mockito + JUnit)
+Controller layer (working on Player) + working in Main
 
 
 
