@@ -2,14 +2,18 @@ package com.p0_arcade;
 
 import java.util.*;
 
-import com.p0_arcade.classes.*;
-import com.p0_arcade.repo.PlayerRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.p0_arcade.repo.DAO.PlayerRepository;
 import com.p0_arcade.service.GameService;
 import com.p0_arcade.service.PlayerService;
 import com.p0_arcade.service.models.Game;
 import com.p0_arcade.service.models.Player;
 
 public class Main {
+
+    private static final Logger log = LoggerFactory.getLogger(Main.class);
 
     private Scanner scanner = new Scanner(System.in);
 
@@ -27,7 +31,7 @@ public class Main {
 
     public static void main(String[] args){
         new Main().run();   
-    }
+
 
     private void run(){
         boolean running = true;

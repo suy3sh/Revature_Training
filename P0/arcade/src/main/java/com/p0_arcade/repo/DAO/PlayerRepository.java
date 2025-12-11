@@ -89,16 +89,15 @@ public class PlayerRepository implements DAOInterface<PlayerEntity>{
             Integer rows = ps.executeUpdate();
 
             if (rows == 0){
-                throw new IllegalArgumentException("No player found with id " + entity.getId() + " (INSIDE PLAYERREPO.JAVA");
+                throw new IllegalArgumentException("No player found with id " + entity.getId());
             }
-
         }
     }
 
     // DELETE
     @Override
     public void deleteById(Integer id) throws SQLException{
-        String sql = "DELETE * FROM players WHERE id = ?";
+        String sql = "DELETE FROM players WHERE id = ?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setInt(1, id);
@@ -106,7 +105,7 @@ public class PlayerRepository implements DAOInterface<PlayerEntity>{
             Integer rows = ps.executeUpdate();
 
             if (rows == 0){
-                System.out.println("No player found with ID: " + id);
+                throw new IllegalArgumentException("No player found with id " + id);
             }
         }
     }

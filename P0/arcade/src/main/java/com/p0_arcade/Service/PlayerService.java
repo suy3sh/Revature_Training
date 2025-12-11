@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /* 
  *   Serice Layer for Player Operations
@@ -16,16 +19,20 @@ import java.util.Optional;
 */
 public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
 
+    private static final Logger log = LoggerFactory.getLogger(PlayerService.class);
+
     private final PlayerRepository playerRepo = new PlayerRepository();
 
     //CREATE
     public Integer createEntity(PlayerEntity p){
         try{
             Integer id = playerRepo.insert(p);
+            log.debug("Created new Player: id={}, name={}", p.getId(), p.getName());
+
             return id;
         }catch(SQLException e){
-            e.printStackTrace();
-            return -1;
+            log.error("Failed to create Player: name={}", p.getName(), e);
+            throw new RuntimeException("Failed to create player: " + p.getName(), e);
         }
     }
 
@@ -34,8 +41,7 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
         try {
             return playerRepo.findAll();
         }catch(SQLException e){
-            System.out.println("Service Error: Could not load players from Database.");
-            e.printStackTrace();
+            log.error("Failed to read all players", e);
             return null;
         }
     }
@@ -52,8 +58,7 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
             return playerEntity;
 
         }catch(SQLException | RuntimeException e){
-            System.out.println("Service Error: Could not look up Player with ID: " + id);
-            e.printStackTrace();
+            log.error("Failed to read Player by id={}", id, e);
             return Optional.empty();
         }
     }
@@ -62,13 +67,13 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
     public PlayerEntity updateEntity(PlayerEntity p){ //return true on success, false on failure
         //check if points is valid after update
         if (p.getPoints() < 0) throw new IllegalArgumentException("Player points cannot be negative");
-        
+
         try{
             playerRepo.update(p);
+            log.debug("Updated Player: id={}, name={}, points={}", p.getId(), p.getName(), p.getPoints());
             return p;
         }catch(SQLException e){
-            System.out.println("Service Error: Could not update Player with ID: " + p.getId());
-            e.printStackTrace();
+            log.error("Failed to update Player: id={}, name={}", p.getId(), p.getName(), e);
             return null;
         }
     }
@@ -77,9 +82,9 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
     public void deleteEntityById(Integer id){
         try{
             playerRepo.deleteById(id);
-        }catch(SQLException | RuntimeException e){
-            System.out.println("Service Error: Could not delete Player with ID: " + id);
-            e.printStackTrace();
+            log.debug("Deleted Player with id={}", id);
+        }catch(SQLException e){
+            log.error("Failed to delete Player with id={}", id, e);
         }
     }
 
@@ -101,6 +106,7 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
             if(playerEntity.isPresent()){
                 Optional<Player> player = convertEntityToModel(playerEntity.get());
                 if(player.isPresent()){
+                    log.info("Converted PlayerEntity to Player model: id={}, name={}", player.get().getId(), player.get().getName());
                     return player;
                 }else{
                     throw new RuntimeException("PlayerEntity conversion failed");
@@ -110,10 +116,8 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
             }
 
         }catch(RuntimeException e){
-            e.printStackTrace();
+            log.error("Failed to get playerModel by id={}", id, e);
             return Optional.empty();
         }
-
     }
-
 }
