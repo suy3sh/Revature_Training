@@ -14,43 +14,6 @@ public class PlayerController {
 
     public Player currPlayer;
 
-    public void handleInput(){
-        boolean running = true;
-        printMenu();
-
-        while (running){
-            
-            int choice = InputHandler.getIntInput("Choose an option: ");
-            switch (choice) {
-                case 1: 
-                    addPlayer(); //create a new Player
-                    running = false;
-                    break;
-                case 2:
-                    logIn();//set curr player to a new player
-                    running = false;
-                    break;
-                case 3:
-                    listAllPlayers(); //return a list of all current players
-                    running = false;
-                    break;
-                case 0:
-                    running = false;
-                    break;
-                default:
-                    System.out.println("Please choose one of the provided options.");
-            }
-        }
-    }
-
-    private void printMenu(){
-        System.out.println("\n=== Player Menu ===");
-        System.out.println("1.) Create a New Player");
-        System.out.println("2.) Log in as an Existing Player");
-        System.out.println("3.) View a list of all Players");
-        System.out.println("0.) Exit");
-    }
-
     public void addPlayer(){
         String name;
         while (true){

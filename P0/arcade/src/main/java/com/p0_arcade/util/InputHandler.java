@@ -7,7 +7,7 @@ public class InputHandler {
 
     public static Integer getIntInput(String prompt){
         while (true){
-            System.out.println(prompt);
+            System.out.print(prompt);
             try{
                 return Integer.parseInt(scanner.nextLine());
             }catch(NumberFormatException e){
@@ -18,7 +18,7 @@ public class InputHandler {
 
     public static String getStringInput(String prompt){
         while (true){
-            System.out.println(prompt);
+            System.out.print(prompt);
             try{
                 return scanner.nextLine();
             }catch(RuntimeException e){

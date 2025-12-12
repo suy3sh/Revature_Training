@@ -19,6 +19,8 @@ public class Main {
 
     private static final Logger log = LoggerFactory.getLogger(Main.class);
 
+    private static final Scanner scanner = new Scanner(System.in);
+
 
     //private final List<Player> players = new ArrayList<>();
     //private final PlayerRepository playerRepo = new PlayerRepository();
@@ -28,25 +30,19 @@ public class Main {
     // private List<Game> games = new ArrayList<>();
 
 
-    // private Player currPlayer = null;
+    private static Player currPlayer = null;
+    private static PlayerController playerController = new PlayerController();
 
     // private final GameService gameService = new GameService(scanner);
 
     public static void main(String[] args){
 
-        PlayerController playerController = new PlayerController();
+        currPlayer = playerController.getCurrPlayer();
         
-        printMenu(playerController.getCurrPlayer());
-
-        InputHandler.getIntInput("Enter 1: ");
-
-        playerController.addPlayer();
         
 
-        
-
-
-        //new Main().run();   
+        Main arcadeApp = new Main();
+        arcadeApp.run();
     }
 
     private static void printMenu(Player currPlayer){
@@ -66,44 +62,43 @@ public class Main {
         }
 
 
-//     private void run(){
-//         boolean running = true;
+    private void run(){
+        boolean runnning = true;
 
-//         while (running){
-//             String choice = printMenu();
-//             initializeGames();
+        while(runnning){
 
-//             switch (choice){
-//                 case "1": //PICK A GAME
-                    
-//                     if (currPlayer == null){
-//                         System.out.println("Current Player has not been chosen! Either create a new Player or Log in!");
-//                         enterContinue();
-//                         break;
-//                     } else {
-//                         Game chosenGame = pickGame();
-//                         gameService.play(currPlayer, chosenGame);
-//                     }
-                    
-//                     break;
-//                 case "2": // LOG IN
-//                     logIn();
-//                     enterContinue();
-//                     break;
-//                 case "3": // CREATE NEW PLAYER
-//                     createPlayer();
-//                     enterContinue();
-//                     break;
-//                 case "4": // LIST CURRENT PLAYERS
-//                     listPlayers();
-//                     enterContinue();
-//                     break;
-//                 case "0": // EXIT GAME
-//                     running = false;
-//                     break;
-//             }
-//         }
-//     }
+            printMenu(currPlayer);
+
+            int choice = InputHandler.getIntInput("Choose an option: ");
+
+            switch(choice){
+                case 1:
+                    log.info("Entering the Arcade ...");
+                    enterContinue();
+                    break;
+                case 2:
+                    playerController.logIn();
+                    enterContinue();
+                    break;
+                case 3:
+                    playerController.addPlayer();
+                    currPlayer = playerController.getCurrPlayer(); //logs in the new player as soon as they are created
+                    enterContinue();
+                    break;
+                case 4:
+                    playerController.listAllPlayers();
+                    enterContinue();
+                    break;
+                case 0:
+                    log.info("Exiting the Arcade ...");
+                    runnning = false;
+                    break;
+                default:
+                    log.warn("Invalid menu option chosen: {}", choice);
+                    System.out.println("Invalid choice. Please choose again.");
+            }
+        }
+    }
 
         
 
@@ -246,8 +241,8 @@ public class Main {
         
 //     }
 
-//     private void enterContinue(){
-//         System.err.println("\nPress Enter to return to the Main Menu.");
-//         scanner.nextLine();
-//     }    
+    private void enterContinue(){
+        System.err.println("\nPress Enter to return to the Main Menu.");
+        scanner.nextLine();
+    }    
  }

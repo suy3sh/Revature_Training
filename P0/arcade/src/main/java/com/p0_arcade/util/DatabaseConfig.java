@@ -26,7 +26,7 @@ public class DatabaseConfig {
                     props.load(input);
                 }
 
-                Class.forName(props.getProperty("db.driver"));
+                Class.forName(props.getProperty("driver"));
 
                 connection = DriverManager.getConnection(
                         props.getProperty("url"),
