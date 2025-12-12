@@ -26,4 +26,17 @@ public class InputHandler {
             }
         }
     }
+
+    public static char getCharInput(String prompt){
+        while (true){
+            System.out.print(prompt);
+            String input = scanner.nextLine();
+
+            if (input.length() == 1) {
+                return input.charAt(0);
+            }
+
+            System.out.println("Invalid input. Please enter exactly one character.");
+        }
+    }
 }

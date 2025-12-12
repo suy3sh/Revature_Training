@@ -2,7 +2,9 @@ package com.p0_arcade.service;
 
 import com.p0_arcade.repo.DAO.GameRepository;
 import com.p0_arcade.repo.entities.GameEntity;
+import com.p0_arcade.repo.entities.WagerEntity;
 import com.p0_arcade.service.models.Game;
+import com.p0_arcade.service.models.Wager;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -21,6 +23,7 @@ public class GameService implements ServiceInterface<GameEntity, Game>{
     private static final Logger log = LoggerFactory.getLogger(GameService.class);
 
     private final GameRepository gameRepo = new GameRepository();
+
 
     //CREATE
     public Integer createEntity(GameEntity entity) {
@@ -121,25 +124,29 @@ public class GameService implements ServiceInterface<GameEntity, Game>{
     }
 
     // Game Logic
-    public int playCoinFlip(Game game, int wager, char guess){
+    public int playCoinFlip(Game game, WagerEntity wager, char guess){
+
         if (guess != 'H' && guess != 'T') {
             throw new IllegalArgumentException("Invalid Input: Guess must be 'H' or 'T'");
         }
 
         double multiplier = game.getMultiplier();
         boolean coin = Math.random() < 0.5; // Heads is true, Tails is false
+
+        System.out.println("It landed " + (coin ? "heads!" : "tails!"));
+
         boolean win = (guess == 'H' && coin) || (guess == 'T' && !coin);
 
         if (win){
             System.out.println("You win!");
-            return (int) (wager * multiplier);
+            return (int) (wager.getPoints() * multiplier);
         } else {
             System.out.println("You lose!");
-            return -wager;
+            return 0;
         }
     }
 
-    public int playRPS(Game game, int wager, char guess){
+    public int playRPS(Game game, WagerEntity wager, char guess){
 
         enum choice{
             ROCK,
@@ -152,15 +159,43 @@ public class GameService implements ServiceInterface<GameEntity, Game>{
         }
 
         double multiplier = game.getMultiplier();
-        
+
+        boolean equal = true;
+
         choice opp = choice.values()[(int)(Math.random() * choice.values().length)];
 
+        //makes sure opp and guess are not equal
+        while(equal){
+            if ((opp == choice.ROCK && guess == 'R') || (opp == choice.PAPER && guess != 'P') || (opp == choice.SCISSORS && guess == 'S')){
+                opp = choice.values()[(int)(Math.random() * choice.values().length)];
+            } else {
+                equal = false;
+            }
+        }
+        
+        System.out.println("The arcade chose " + opp.name());
+
+
         if ((opp == choice.ROCK && guess == 'P') || (opp == choice.PAPER && guess == 'S') || (opp == choice.SCISSORS && guess == 'R')){
+            if (guess == 'P'){
+                System.out.println("Paper beats Rock.");
+            } else if (guess == 'S'){
+                System.out.println("Scissors beats Paper.");
+            } else {
+                System.out.println("Rock beats Scissors");
+            }
             System.out.println("You win!");
-            return (int) (wager * multiplier);
+            return (int) (wager.getPoints() * multiplier);
         } else {
+            if (opp == choice.PAPER){
+                System.out.println("Paper beats Rock.");
+            } else if (opp == choice.SCISSORS){
+                System.out.println("Scissors beats Paper.");
+            } else {
+                System.out.println("Rock beats Scissors");
+            }
             System.out.println("You lose!");
-            return -wager;
+            return 0;
         }
     }
 }

@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 
 import com.p0_arcade.controller.PlayerController;
+import com.p0_arcade.controller.GameController;
 
 import com.p0_arcade.util.InputHandler;
 
@@ -21,26 +22,14 @@ public class Main {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-
-    //private final List<Player> players = new ArrayList<>();
-    //private final PlayerRepository playerRepo = new PlayerRepository();
-    //private final PlayerService playerService = new PlayerService(playerRepo);
-
-    
-    // private List<Game> games = new ArrayList<>();
-
-
     private static Player currPlayer = null;
     private static PlayerController playerController = new PlayerController();
-
-    // private final GameService gameService = new GameService(scanner);
+    private static GameController gameController = new GameController();
 
     public static void main(String[] args){
 
         currPlayer = playerController.getCurrPlayer();
         
-        
-
         Main arcadeApp = new Main();
         arcadeApp.run();
     }
@@ -61,7 +50,6 @@ public class Main {
             //return chooseMenuOption();
         }
 
-
     private void run(){
         boolean runnning = true;
 
@@ -74,10 +62,16 @@ public class Main {
             switch(choice){
                 case 1:
                     log.info("Entering the Arcade ...");
-                    enterContinue();
+                    if (currPlayer == null){
+                        System.out.println("No Player is logged in! Log in or create a new Player to play.");
+                    } else {
+                        currPlayer = gameController.handleInput(currPlayer);
+                        enterContinue();
+                    }
                     break;
                 case 2:
                     playerController.logIn();
+                    currPlayer = playerController.getCurrPlayer(); 
                     enterContinue();
                     break;
                 case 3:
@@ -99,147 +93,6 @@ public class Main {
             }
         }
     }
-
-        
-
-//     private String chooseMenuOption(){
-//         while (true){
-//             System.out.print("\nChoose an option: ");
-//             String input = scanner.nextLine();
-
-//             //validate
-//             if (input.equals("1") ||
-//                 input.equals("2") ||
-//                 input.equals("3") ||
-//                 input.equals("4") ||
-//                 input.equals("0")){
-//                     return input;
-//                 }
-
-//             System.out.println("Invalid Choice. Choose again.");
-//         }
-//     }
-
-//     private String chooseGameOption(){
-//         while (true){
-//             System.out.print("\nChoose an option: ");
-//             String input = scanner.nextLine();
-
-//             //validate
-//             if (input.equals("1") ||
-//                 input.equals("2") ||
-//                 input.equals("0")){
-//                     return input;
-//                 }
-
-//             System.out.println("Invalid Choice. Choose again.");
-//         }
-//     }
-
-//     private Game pickGame(){ 
-
-//         System.out.println("\nPick a Game to Play");
-//         System.out.println("===================");
-//         System.out.println("1.) Coin Flip (Minimum Wager: 20 | Multiplier: 1.5x)");
-//         System.out.println("2.) Rock, Paper, Scissors (Minumum Wager: 10 | Multiplier: 2.0x)");
-//         System.out.println("0.) Go back to Main Menu");
-        
-//         String input = chooseGameOption();
-//         Game game = null;
-
-
-//         switch (input){
-//             case "1":
-//                 game = games.get(0);
-//                 break;
-//             case "2":
-//                 game = games.get(1);
-//                 break;
-//             case "0":
-//                 return null;
-//         }
-//         return game;
-//     }
-
-//     private void createPlayer(){
-//         System.out.println("\nCreating New Player ...");
-//         System.out.println("=======================");
-//         String name = "";
-
-//         while(name.isEmpty()){
-//             System.out.print("Enter player name: ");
-//             name = scanner.nextLine();
-//             if (name.isEmpty()){
-//                 System.out.println("Player name cannot be empty.");
-//             }
-//         }
-
-//         Player player = playerService.createPlayer(name);
-
-//         System.out.println("Created Player: " + player.getName() + " (ID: " + player.getId() + " | " + player.getPoints() + " pts)");
-//         currPlayer = player;
-//     }
-
-//     private void listPlayers(){
-        
-//         List<Player> players = playerService.getAllPlayers();
-//         System.out.println("\nList of Current Available Players");
-//         System.out.println("=================================");
-
-//         if (players.isEmpty()){
-//             System.out.println("[No players created yet...]");
-//             return;
-//         } else {
-
-//             System.out.printf("%-5s %-20s %-10s%n", "ID", "NAME", "POINTS");
-//             System.out.println("------------------------------------------");
-//             for (Player p : players){
-//                 System.out.printf("%-5d %-20s %-10d%n", p.getId(), p.getName(), p.getPoints());
-//             }
-//         }
-//     }
-
-//     private void logIn(){
-
-//         List<Player> players = playerService.getAllPlayers();
-//         if(players.isEmpty()){
-//             System.out.println("\nNo available Players. Create a player first.");
-//             return;
-//         }
-
-//         int id = -1;
-//         boolean invalidID = true;
-
-//         while (invalidID){
-//             System.out.print("\nEnter the ID of the player you want to play as: ");
-            
-//             String input = scanner.nextLine();
-//             try {
-//                 id = Integer.parseInt(input);
-//                 invalidID = false;
-//             } catch (NumberFormatException e){
-//                 System.err.println("Enter a valid ID.");
-//             }
-//         }
-
-//         Player p = playerService.getPlayerById(id); //either returns the player or null;
-
-//         if (p == null){
-//             System.out.println("No Player found with ID " + id);
-//             return;
-//         }
-        
-
-        
-            
-//         currPlayer = p;
-//         System.out.println("You are now logged in as: " + p.getName() + " (ID " + p.getId() + " | " + p.getPoints() + " pts)");
-//         return;
-            
-        
-
-        
-//     }
 
     private void enterContinue(){
         System.err.println("\nPress Enter to return to the Main Menu.");

@@ -85,13 +85,13 @@ public class WagerService implements ServiceInterface<WagerEntity, Wager>{
     public Optional<Wager> convertEntityToModel(WagerEntity entity) {
         Wager wager = new Wager();
 
-        Optional<Player> player = playerService.getModelById(entity.getId());
+        Optional<Player> player = playerService.getModelById(entity.getPlayerId());
 
         if (player.isEmpty()){
             throw new RuntimeException("invalid Player id");
         }
 
-        Optional<Game> game = gameService.getModelById(entity.getId());
+        Optional<Game> game = gameService.getModelById(entity.getGameId());
 
         if (game.isEmpty()){
             throw new RuntimeException("invalid Game id");

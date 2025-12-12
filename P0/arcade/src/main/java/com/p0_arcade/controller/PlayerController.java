@@ -5,6 +5,7 @@ import com.p0_arcade.service.PlayerService;
 import com.p0_arcade.service.models.Player;
 import com.p0_arcade.util.InputHandler;
 
+
 import java.util.Optional;
 import java.util.List;
 
@@ -88,5 +89,25 @@ public class PlayerController {
 
     public Player getCurrPlayer(){
         return currPlayer;
+    }
+
+    public Player updatePlayer(Player p, int delta){
+        int playerId = p.getId();
+        Optional<PlayerEntity> playerEntityOpt = playerService.readEntityById(playerId);
+        
+        if (playerEntityOpt.isEmpty()) {
+            throw new RuntimeException("Player not found with ID: " + playerId);
+        }
+        
+        PlayerEntity playerEntity = playerEntityOpt.get();
+        playerEntity.setPoints(playerEntity.getPoints() + delta);
+        
+        playerEntity = playerService.updateEntity(playerEntity);
+        
+        if (playerEntity == null) {
+            throw new RuntimeException("Failed to update player in database");
+        }
+
+        return playerService.convertEntityToModel(playerEntity).get();
     }
 }
