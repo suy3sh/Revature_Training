@@ -4,7 +4,6 @@ import com.p0_arcade.repo.DAO.GameRepository;
 import com.p0_arcade.repo.entities.GameEntity;
 import com.p0_arcade.repo.entities.WagerEntity;
 import com.p0_arcade.service.models.Game;
-import com.p0_arcade.service.models.Wager;
 
 import java.sql.SQLException;
 import java.util.List;

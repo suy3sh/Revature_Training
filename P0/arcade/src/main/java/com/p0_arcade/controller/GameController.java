@@ -2,7 +2,6 @@ package com.p0_arcade.controller;
 
 import com.p0_arcade.util.InputHandler;
 import com.p0_arcade.service.GameService;
-import com.p0_arcade.service.PlayerService;
 import com.p0_arcade.service.models.Game;
 import com.p0_arcade.service.models.Player;
 import com.p0_arcade.repo.entities.WagerEntity;
@@ -10,7 +9,6 @@ import com.p0_arcade.repo.entities.WagerEntity;
 
 import java.util.Scanner;
 
-import javax.swing.plaf.metal.MetalBorders.PaletteBorder;
 
 public class GameController {
 
