@@ -85,7 +85,14 @@ public class GameController {
         System.out.println("H: Heads");
         System.out.println("T: Tails");
 
-        choice = InputHandler.getCharInput("Choose either Heads or Tails (H/T): ");
+        do {
+            choice = Character.toUpperCase(InputHandler.getCharInput("Choose either Heads or Tails (H/T): "));
+
+            if (choice != 'H' && choice != 'T') {
+                System.out.println("Invalid choice. Please enter 'H' or 'T'.");
+            }
+
+        } while (choice != 'H' && choice != 'T');
 
         System.out.println("Press Enter to Flip the coin!");
         scanner.nextLine();
@@ -130,7 +137,15 @@ public class GameController {
         System.out.println("P: Paper");
         System.out.println("S: Scissors");
 
-        choice = InputHandler.getCharInput("Choose your hand (R/P/S): ");
+        do {
+            choice = Character.toUpperCase(InputHandler.getCharInput("Choose your hand (R/P/S): "));
+
+            if (choice != 'R' && choice != 'P' && choice != 'S') {
+                System.out.println("Invalid choice. Please enter 'R', 'P', or 'S'.");
+            }
+            
+            
+        } while (choice != 'R' && choice != 'P' && choice != 'S');
 
         System.out.println("Press Enter to Shoot");
         scanner.nextLine();

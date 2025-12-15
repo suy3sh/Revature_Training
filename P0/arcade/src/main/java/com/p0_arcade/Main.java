@@ -66,7 +66,6 @@ public class Main {
                         System.out.println("No Player is logged in! Log in or create a new Player to play.");
                     } else {
                         currPlayer = gameController.handleInput(currPlayer);
-                        enterContinue();
                     }
                     break;
                 case 2:
