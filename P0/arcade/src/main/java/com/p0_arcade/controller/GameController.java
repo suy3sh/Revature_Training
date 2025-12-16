@@ -76,6 +76,10 @@ public class GameController {
         System.out.println("---------------------------------");
 
         points = wagerController.addWager(cf, currPlayer);
+
+        if (points == 0){
+            return currPlayer; // Not enough points to wager
+        }
         
         wager.setPoints(points);
 
@@ -120,7 +124,7 @@ public class GameController {
         int points;     //the amount of points the user chose to wager
         int winLose;    //the amount of the points the user either won or lose
         
-        System.out.println("\n====== Welcome to Rock, Paper, Scissors!======");
+        System.out.println("\n====== Welcome to Rock, Paper, Scissors! ======");
         System.out.println(cf.getDescription());
         System.out.println("Minimum Wager: " + cf.getMinWager());
         System.out.println("Multiplier: " + cf.getMultiplier());    

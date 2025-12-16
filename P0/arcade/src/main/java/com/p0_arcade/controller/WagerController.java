@@ -26,6 +26,7 @@ public class WagerController {
                 System.out.println("Wager must be greater than or equal to minumum Wager amount.");
             }else if(points > player.getPoints()){
                 System.out.println("You do not have enough points.");
+                return 0;
             }else{
                 break;
             }
