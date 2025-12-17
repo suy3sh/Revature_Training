@@ -35,7 +35,6 @@ public class Main {
     }
 
     private static void printMenu(Player currPlayer){
-
             System.out.println("\n========== Welcome to the Arcade! ==========");
             System.out.println(
                 "Current Player: " + (currPlayer == null ? "[none]" : 

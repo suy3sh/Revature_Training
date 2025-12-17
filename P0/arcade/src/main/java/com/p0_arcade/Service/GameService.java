@@ -21,7 +21,17 @@ public class GameService implements ServiceInterface<GameEntity, Game>{
 
     private static final Logger log = LoggerFactory.getLogger(GameService.class);
 
-    private final GameRepository gameRepo = new GameRepository();
+    private final GameRepository gameRepo;
+    
+    // Constructor for dependency injection (used in tests)
+    public GameService(GameRepository gameRepo) {
+        this.gameRepo = gameRepo;
+    }
+    
+    // Default constructor for production use
+    public GameService() {
+        this.gameRepo = new GameRepository();
+    }
 
 
     //CREATE

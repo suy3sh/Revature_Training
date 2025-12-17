@@ -69,8 +69,8 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
     }
 
     //UPDATE
-    public PlayerEntity updateEntity(PlayerEntity p){ //return true on success, false on failure
-        //check if points is valid after update
+    public PlayerEntity updateEntity(PlayerEntity p){
+        //check if points is valid before update
         if (p.getPoints() < 0) throw new IllegalArgumentException("Player points cannot be negative");
 
         try{
