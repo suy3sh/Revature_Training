@@ -22,7 +22,17 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
 
     private static final Logger log = LoggerFactory.getLogger(PlayerService.class);
 
-    private final PlayerRepository playerRepo = new PlayerRepository();
+    private final PlayerRepository playerRepo;
+    
+    // Constructor for dependency injection (used in tests)
+    public PlayerService(PlayerRepository playerRepo) {
+        this.playerRepo = playerRepo;
+    }
+    
+    // Default constructor for production use
+    public PlayerService() {
+        this.playerRepo = new PlayerRepository();
+    }
 
     //CREATE
     public Integer createEntity(PlayerEntity p){

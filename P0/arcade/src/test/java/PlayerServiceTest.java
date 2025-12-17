@@ -10,10 +10,13 @@ import com.p0_arcade.repo.entities.PlayerEntity;
 import com.p0_arcade.service.PlayerService;
 import com.p0_arcade.service.models.Player;
 
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.*;
 
@@ -23,7 +26,6 @@ public class PlayerServiceTest{
     @Mock
     private PlayerRepository playerRepo;
 
-    @InjectMocks
     private PlayerService playerService;
 
     private PlayerEntity testPlayerEntity;
@@ -31,6 +33,9 @@ public class PlayerServiceTest{
 
     @BeforeEach
     void setup(){
+        // Create PlayerService with mocked repository
+        playerService = new PlayerService(playerRepo);
+        
         testPlayerEntity = new PlayerEntity();
         testPlayerEntity.setId(1);
         testPlayerEntity.setName("testPlayer");
@@ -136,6 +141,56 @@ public class PlayerServiceTest{
 
         //Verify
         verify(playerRepo, times(1)).update(testPlayerEntity);
+    }
+
+    /*
+    public List<PlayerEntity> readAllEntities() {
+        try {
+            return playerRepo.findAll();
+        }catch(SQLException e){
+            log.error("Failed to read all players", e);
+            e.printStackTrace();
+            return null;
+        }
+    }
+    */
+
+    @Test
+    void testreadAllEntities_Success_returnsListOfPlayers() throws SQLException{
+        //Arrange
+        List<PlayerEntity> expectedPlayers = new ArrayList<>();
+
+        PlayerEntity player1 = new PlayerEntity();
+        player1.setId(1);
+        player1.setName("Player1");
+        player1.setPoints(100);
+
+        PlayerEntity player2 = new PlayerEntity();
+        player2.setId(2);
+        player2.setName("Player2");
+        player2.setPoints(200);
+        
+        expectedPlayers.add(player1);
+        expectedPlayers.add(player2);
+        
+        when(playerRepo.findAll()).thenReturn(expectedPlayers);
+
+        //Act
+        List<PlayerEntity> result = playerService.readAllEntities();
+
+        //Assert
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals(expectedPlayers, result);
+        assertEquals(1, result.get(0).getId());
+        assertEquals("Player1", result.get(0).getName());
+        assertEquals(100, result.get(0).getPoints());
+        assertEquals(2, result.get(1).getId());
+        assertEquals("Player2", result.get(1).getName());
+        assertEquals(200, result.get(1).getPoints());
+
+        //Verify
+        verify(playerRepo, times(1)).findAll();
     }
 
    
