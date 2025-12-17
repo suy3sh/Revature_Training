@@ -133,5 +133,4 @@ public class WagerService implements ServiceInterface<WagerEntity, Wager>{
         }
     }
     
-
 }
