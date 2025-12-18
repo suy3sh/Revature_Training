@@ -18,7 +18,6 @@ public interface ServiceInterface<T, U> {
     //DELETE
     public void deleteEntityById(Integer id);
 
-
     // Conversation
     public Optional<U> convertEntityToModel(T entity);
     public Optional<U> getModelById(Integer id);
