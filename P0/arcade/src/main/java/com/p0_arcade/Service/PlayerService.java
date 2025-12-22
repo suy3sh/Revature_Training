@@ -22,7 +22,17 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
 
     private static final Logger log = LoggerFactory.getLogger(PlayerService.class);
 
-    private final PlayerRepository playerRepo = new PlayerRepository();
+    private final PlayerRepository playerRepo;
+    
+    // Constructor for dependency injection (used in tests)
+    public PlayerService(PlayerRepository playerRepo) {
+        this.playerRepo = playerRepo;
+    }
+    
+    // Default constructor for production use
+    public PlayerService() {
+        this.playerRepo = new PlayerRepository();
+    }
 
     //CREATE
     public Integer createEntity(PlayerEntity p){
@@ -69,8 +79,8 @@ public class PlayerService implements ServiceInterface<PlayerEntity, Player>{
     }
 
     //UPDATE
-    public PlayerEntity updateEntity(PlayerEntity p){ //return true on success, false on failure
-        //check if points is valid after update
+    public PlayerEntity updateEntity(PlayerEntity p){
+        //check if points is valid before update
         if (p.getPoints() < 0) throw new IllegalArgumentException("Player points cannot be negative");
 
         try{

@@ -1,20 +1,16 @@
 package com.p0_arcade;
 
-
 import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-
 
 import com.p0_arcade.controller.PlayerController;
 import com.p0_arcade.controller.GameController;
 
 import com.p0_arcade.util.InputHandler;
 
-
- import com.p0_arcade.service.models.Player;
+import com.p0_arcade.service.models.Player;
 
 public class Main {
 
@@ -35,7 +31,6 @@ public class Main {
     }
 
     private static void printMenu(Player currPlayer){
-
             System.out.println("\n========== Welcome to the Arcade! ==========");
             System.out.println(
                 "Current Player: " + (currPlayer == null ? "[none]" : 
