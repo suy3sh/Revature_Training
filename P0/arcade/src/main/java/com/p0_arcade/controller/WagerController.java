@@ -57,6 +57,8 @@ public class WagerController {
                 // Update the player model to reflect the change
                 player.setPoints(pe.getPoints());
             }
+
+            System.out.println("New point total: " + player.getPoints() + " pts");
         }
 
         return points;
