@@ -5,8 +5,6 @@ import com.spring.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.Map;
-
 public class Main {
     public static void main(String[] args) {
         // Load Spring context from XML config
@@ -31,10 +29,6 @@ public class Main {
         User prototype2 = context.getBean("prototypeUser", User.class);
 
         System.out.println("Are they the same? " + (prototype1 == prototype2));
-
-        // Get non-bean configuration
-        Map<String, String> appConfig = context.getBean("appConfig", Map.class);
-        System.out.println("App Config: " + appConfig );
 
         // Get bean by type
         UserService serviceByType = context.getBean(UserService.class);
