@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--    Import other bean configurations-->
+    <import resource="beans.xml"/>
+
+<!--    Direct bean definitions can also go here-->
+    <bean id="appConfig" class="java.util.HashMap">
+        <constructor-arg>
+            <map>
+                <entry key="app.name" value="Spring XML Config App"/>
+                <entry key="app.version" value="1.0"/>
+            </map>
+        </constructor-arg>
+    </bean>
+</beans>
