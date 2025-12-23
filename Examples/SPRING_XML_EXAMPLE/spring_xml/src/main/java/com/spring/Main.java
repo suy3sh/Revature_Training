@@ -1,19 +1,18 @@
 package com.spring;
 
-import java.util.Map;
-
+import com.spring.models.User;
+import com.spring.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.spring.models.User;
-import com.spring.service.UserService;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        //Load Spring context from XML configuration
+        // Load Spring context from XML config
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
-         // Get bean by ID
+        // Get bean by ID
         UserService userService = (UserService) context.getBean("userService");
 
         // use the bean
@@ -33,7 +32,7 @@ public class Main {
 
         System.out.println("Are they the same? " + (prototype1 == prototype2));
 
-         // Get non-bean configuration
+        // Get non-bean configuration
         Map<String, String> appConfig = context.getBean("appConfig", Map.class);
         System.out.println("App Config: " + appConfig );
 
