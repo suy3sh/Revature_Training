@@ -4,6 +4,7 @@ import com.spring.model.User;
 import com.spring.service.UserService;
 import com.spring.service.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 
 public class AppConfig {
 
@@ -26,9 +27,9 @@ public class AppConfig {
     }
 
     @Bean
-    @org.springframework.context.annotation.Scope("prototype")
+    @Scope("prototype")
     public User prototypeUser(){
-        return new User("PrototypeUser", "prototype@example.com");
+        return new User("Prototype User", "prototype@example.com");
     }
         
 

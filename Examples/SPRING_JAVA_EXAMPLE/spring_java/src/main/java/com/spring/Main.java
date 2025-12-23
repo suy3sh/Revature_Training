@@ -2,7 +2,6 @@ package com.spring;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Bean;
 
 import com.spring.model.User;
 import com.spring.service.UserService;
@@ -27,5 +26,8 @@ public class Main {
         User p1 = context.getBean("prototypeUser", User.class);
         User p2 = context.getBean("prototypeUser", User.class);
         System.out.println(p1 == p2);
+
+        //close
+        ((AnnotationConfigApplicationContext) context).close();
     }
 }
