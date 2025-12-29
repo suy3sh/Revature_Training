@@ -1,4 +1,3 @@
-package Exercises;
 /*
 Using the String, StringBuilder, and StringBuffer, create an application to present 
 the performance difference between the three. How you handle the test and present 
